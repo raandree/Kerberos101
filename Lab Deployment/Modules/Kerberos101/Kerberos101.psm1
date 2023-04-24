@@ -1,10 +1,10 @@
-﻿#region Internals
+#region Internals
 function Get-ADComputerSPNs
 {
 	param(
 		[string]$ComputerName
 	)
-	
+
 	$computer = Get-ADComputer -Identity $ComputerName -Properties ServicePrincipalName
 	$computer.ServicePrincipalName
 }
@@ -23,22 +23,22 @@ function Start-Lab4
 	<#
 	.SYNOPSIS
 		Does the changes required for lab 4
-		
+
 	.DESCRIPTION
 		Removes the host SPN from the file server and adds them to the SQL server
-	
+
 	.INPUTS
 		System.String
-	
+
 	.OUTPUTS
 		Null
 	#>
 
-	$computer = Get-ADComputer -LDAPFilter "(dNSHostName=$($computers.FileServer))" -Properties ServicePrincipalName	
+	$computer = Get-ADComputer -LDAPFilter "(dNSHostName=$($computers.FileServer))" -Properties ServicePrincipalName
 	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Remove = "HOST/$($Computers.FileServer)" }
 	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Remove = "HOST/$($computers.FileServer.Substring(0, $computers.FileServer.IndexOf('.')))" }
-	
-	$computer = Get-ADComputer -LDAPFilter "(dNSHostName=$($computers.SqlServer))" -Properties ServicePrincipalName	
+
+	$computer = Get-ADComputer -LDAPFilter "(dNSHostName=$($computers.SqlServer))" -Properties ServicePrincipalName
 	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Add = "HOST/$($Computers.FileServer)" }
 	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Add = "HOST/$($computers.FileServer.Substring(0, $computers.FileServer.IndexOf('.')))" }
 
@@ -50,22 +50,22 @@ function Repair-Lab4
 	<#
 	.SYNOPSIS
 		Repairs the changes made for lab 4
-		
+
 	.DESCRIPTION
 		Removes the file server's SPNs from the SQL server account and adds them to the file server computer account.
-	
+
 	.INPUTS
 		System.String
-	
+
 	.OUTPUTS
 		Null
 	#>
 
     $computer = Get-ADComputer -LDAPFilter "(dNSHostName=$($computers.SqlServer))" -Properties ServicePrincipalName
 	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Remove = "HOST/$($Computers.FileServer)" }
-	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Remove = "HOST/$($computers.FileServer.Substring(0, $computers.FileServer.IndexOf('.')))" }	
+	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Remove = "HOST/$($computers.FileServer.Substring(0, $computers.FileServer.IndexOf('.')))" }
 
-    $computer = Get-ADComputer -LDAPFilter "(dNSHostName=$($computers.FileServer))" -Properties ServicePrincipalName	
+    $computer = Get-ADComputer -LDAPFilter "(dNSHostName=$($computers.FileServer))" -Properties ServicePrincipalName
 	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Add = "HOST/$($Computers.FileServer)" }
 	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Add = "HOST/$($computers.FileServer.Substring(0, $computers.FileServer.IndexOf('.')))" }
 
@@ -89,7 +89,7 @@ function Get-SqlData1
 	$numberOfRecords = $dataAdapter.Fill($dataSet)
 
 	$connection.Close()
-	
+
 	Write-Host ("Read {0} records from the pubs database" -f $numberOfRecords)
 }
 
@@ -109,7 +109,7 @@ function Get-SqlData2
 	$numberOfRecords = $dataAdapter.Fill($dataSet)
 
 	$connection.Close()
-	
+
 	Write-Host ("Read {0} records from the pubs database" -f $numberOfRecords)
 }
 
@@ -119,18 +119,18 @@ function Start-Lab3
 	<#
 	.SYNOPSIS
 		Does the changes required for lab 3
-		
+
 	.DESCRIPTION
 		Adds the file server's SPNs on the client computer account for the client machine.
-	
+
 	.INPUTS
 		System.String
-	
+
 	.OUTPUTS
 		Null
 	#>
 
-	$computer = Get-ADComputer -LDAPFilter "(dNSHostName=$($computers.FileServer))" -Properties ServicePrincipalName	
+	$computer = Get-ADComputer -LDAPFilter "(dNSHostName=$($computers.FileServer))" -Properties ServicePrincipalName
 	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Remove = "HOST/$($Computers.FileServer)" }
 	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Remove = "HOST/$($computers.FileServer.Substring(0, $computers.FileServer.IndexOf('.')))" }
 
@@ -142,13 +142,13 @@ function Repair-Lab3
 	<#
 	.SYNOPSIS
 		Repairs the changes made for lab 3
-		
+
 	.DESCRIPTION
 		Removes the file server's SPNs from the computer account for the client machine.
-	
+
 	.INPUTS
 		System.String
-	
+
 	.OUTPUTS
 		Null
 	#>

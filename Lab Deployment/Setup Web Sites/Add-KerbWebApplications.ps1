@@ -30,7 +30,7 @@ function Add-KerbWebApplications
     Write-Host 'done'
 
     Write-Host "Enabling Windows Authentication (no Kernel Mode) for all web applications and disabling anonymous access..."  -NoNewline
-    $webApps | ForEach-Object { 
+    $webApps | ForEach-Object {
         Set-WebConfigurationProperty -PSPath IIS:\ -Location "$($site.name)/$($_.name)" -Filter //windowsAuthentication -Name Enabled -Value True
         Set-WebConfigurationProperty -PSPath IIS:\ -Location "$($site.name)/$($_.name)" -Filter //windowsAuthentication -Name useKernelMode -Value False
         Set-WebConfigurationProperty -PSPath IIS:\ -Location "$($site.name)/$($_.name)" -Filter //anonymousAuthentication -Name Enabled -Value False
@@ -172,6 +172,6 @@ $hash = $password | ConvertTo-NTHash
 Set-ADAccountPasswordHash -SamAccountName "$($testSiteName)Service" -Domain $domainShortName -NTHash $hash -Server $dc
 $u = Get-ADReplAccount -SamAccountName "$($testSiteName)Service" -Domain $domainShortName -Server $dc
 
-klist purge 
+klist purge
 Add-Type -AssemblyName System.IdentityModel
 New-Object System.IdentityModel.Tokens.KerberosRequestorSecurityToken -ArgumentList http/KerbTest.a.vm.net

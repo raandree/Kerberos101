@@ -1,0 +1,12 @@
+C:\Users\administrator\Desktop\IdentityCheck\IdentityCheck\bin\IdentityCheck.dll
+C:\Users\administrator\Desktop\IdentityCheck\IdentityCheck\bin\IdentityCheck.pdb
+C:\Users\administrator\Desktop\IdentityCheck\IdentityCheck\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\administrator\Desktop\IdentityCheck\IdentityCheck\obj\Debug\IdentityCheck.dll
+C:\Users\administrator\Desktop\IdentityCheck\IdentityCheck\obj\Debug\IdentityCheck.pdb
+C:\Users\randr\Dropbox\Microsoft Workshops\Kerberos 101\Setup Web Sites\IdentityCheck\IdentityCheck\bin\IdentityCheck.dll.config
+C:\Users\randr\Dropbox\Microsoft Workshops\Kerberos 101\Setup Web Sites\IdentityCheck\IdentityCheck\bin\IdentityCheck.dll
+C:\Users\randr\Dropbox\Microsoft Workshops\Kerberos 101\Setup Web Sites\IdentityCheck\IdentityCheck\bin\IdentityCheck.pdb
+C:\Users\randr\Dropbox\Microsoft Workshops\Kerberos 101\Setup Web Sites\IdentityCheck\IdentityCheck\obj\Debug\IdentityCheck.csprojResolveAssemblyReference.cache
+C:\Users\randr\Dropbox\Microsoft Workshops\Kerberos 101\Setup Web Sites\IdentityCheck\IdentityCheck\obj\Debug\IdentityCheck.csproj.CoreCompileInputs.cache
+C:\Users\randr\Dropbox\Microsoft Workshops\Kerberos 101\Setup Web Sites\IdentityCheck\IdentityCheck\obj\Debug\IdentityCheck.dll
+C:\Users\randr\Dropbox\Microsoft Workshops\Kerberos 101\Setup Web Sites\IdentityCheck\IdentityCheck\obj\Debug\IdentityCheck.pdb

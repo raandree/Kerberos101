@@ -1,0 +1,27 @@
+C:\Users\administrator\Desktop\TestSite2\TestSite2\bin\TestSite2.dll
+C:\Users\administrator\Desktop\TestSite2\TestSite2\bin\TestSite2.pdb
+C:\Users\administrator\Desktop\TestSite2\TestSite2\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\administrator\Desktop\TestSite2\TestSite2\obj\Debug\TestSite2.dll
+C:\Users\administrator\Desktop\TestSite2\TestSite2\obj\Debug\TestSite2.pdb
+C:\Users\raandree\Dropbox\Transfer\Kerberos 101\Labs\Web Sites\TestSite2\TestSite2\bin\TestSite2.dll
+C:\Users\raandree\Dropbox\Transfer\Kerberos 101\Labs\Web Sites\TestSite2\TestSite2\bin\TestSite2.pdb
+C:\Users\raandree\Dropbox\Transfer\Kerberos 101\Labs\Web Sites\TestSite2\TestSite2\obj\Debug\TestSite2.csprojResolveAssemblyReference.cache
+C:\Users\raandree\Dropbox\Transfer\Kerberos 101\Labs\Web Sites\TestSite2\TestSite2\obj\Debug\TestSite2.dll
+C:\Users\raandree\Dropbox\Transfer\Kerberos 101\Labs\Web Sites\TestSite2\TestSite2\obj\Debug\TestSite2.pdb
+C:\Users\Raimund\Dropbox\Desktop\Kerberos 101\Labs\Web Sites\Solutions\TestSite2\TestSite2\bin\TestSite2.dll
+C:\Users\Raimund\Dropbox\Desktop\Kerberos 101\Labs\Web Sites\Solutions\TestSite2\TestSite2\bin\TestSite2.pdb
+C:\Users\Raimund\Dropbox\Desktop\Kerberos 101\Labs\Web Sites\Solutions\TestSite2\TestSite2\obj\Debug\TestSite2.csprojResolveAssemblyReference.cache
+C:\Users\Raimund\Dropbox\Desktop\Kerberos 101\Labs\Web Sites\Solutions\TestSite2\TestSite2\obj\Debug\TestSite2.dll
+C:\Users\Raimund\Dropbox\Desktop\Kerberos 101\Labs\Web Sites\Solutions\TestSite2\TestSite2\obj\Debug\TestSite2.pdb
+C:\Users\Raimund\Dropbox\Desktop\Kerberos 101\Setup Web Sites\TestSite2\TestSite2\bin\TestSite2.dll
+C:\Users\Raimund\Dropbox\Desktop\Kerberos 101\Setup Web Sites\TestSite2\TestSite2\bin\TestSite2.pdb
+C:\Users\Raimund\Dropbox\Desktop\Kerberos 101\Setup Web Sites\TestSite2\TestSite2\obj\Debug\TestSite2.csprojResolveAssemblyReference.cache
+C:\Users\Raimund\Dropbox\Desktop\Kerberos 101\Setup Web Sites\TestSite2\TestSite2\obj\Debug\TestSite2.dll
+C:\Users\Raimund\Dropbox\Desktop\Kerberos 101\Setup Web Sites\TestSite2\TestSite2\obj\Debug\TestSite2.pdb
+C:\Users\randr\Dropbox\Microsoft Workshops\Kerberos 101\Setup Web Sites\TestSite2\TestSite2\bin\TestSite2.dll.config
+C:\Users\randr\Dropbox\Microsoft Workshops\Kerberos 101\Setup Web Sites\TestSite2\TestSite2\bin\TestSite2.dll
+C:\Users\randr\Dropbox\Microsoft Workshops\Kerberos 101\Setup Web Sites\TestSite2\TestSite2\bin\TestSite2.pdb
+C:\Users\randr\Dropbox\Microsoft Workshops\Kerberos 101\Setup Web Sites\TestSite2\TestSite2\obj\Debug\TestSite2.csprojResolveAssemblyReference.cache
+C:\Users\randr\Dropbox\Microsoft Workshops\Kerberos 101\Setup Web Sites\TestSite2\TestSite2\obj\Debug\TestSite2.dll
+C:\Users\randr\Dropbox\Microsoft Workshops\Kerberos 101\Setup Web Sites\TestSite2\TestSite2\obj\Debug\TestSite2.pdb
+C:\Users\randr\Dropbox\Microsoft Workshops\Kerberos 101\Setup Web Sites\TestSite2\TestSite2\obj\Debug\TestSite2.csproj.CoreCompileInputs.cache

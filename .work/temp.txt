@@ -1,0 +1,6 @@
+
+
+
+dotnet tool install -g bruce
+
+ktpass /out C:\app1.keytab /princ test/test1.a.vm.net@a.vm.net /mapuser test1 /crypto RC4-HMAC-NT /ptype KRB5_NT_PRINCIPAL /pass Password2 /target kerbdc2.a.vm.net

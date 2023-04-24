@@ -1,0 +1,17 @@
+USE [master]
+GO
+
+CREATE LOGIN [A\KerbTestService] FROM WINDOWS WITH DEFAULT_DATABASE=[master], DEFAULT_LANGUAGE=[us_english]
+CREATE LOGIN [A\a877777] FROM WINDOWS WITH DEFAULT_DATABASE=[master], DEFAULT_LANGUAGE=[us_english]
+GO
+
+USE [pubs]
+GO
+
+CREATE USER [KerbTestService] FOR LOGIN [A\KerbTestService] WITH DEFAULT_SCHEMA=[db_datareader]
+CREATE USER [a877777] FOR LOGIN [A\a877777] WITH DEFAULT_SCHEMA=[db_datareader]
+GO
+
+ALTER ROLE [db_datareader] ADD MEMBER [KerbTestService]
+ALTER ROLE [db_datareader] ADD MEMBER [a877777]
+GO

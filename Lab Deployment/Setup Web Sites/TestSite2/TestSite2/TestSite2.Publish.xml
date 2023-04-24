@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<publishData>
+  <publishProfile publishUrl="\\ex1\c$\Inetpub\wwwroot\TestSite2" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="True" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
+    <file relUrl="Scripts/jquery-1.4.1.min.js" publishTime="01/25/2012 00:30:33" />
+    <file relUrl="Scripts/jquery-1.4.1-vsdoc.js" publishTime="01/25/2012 00:30:33" />
+    <file relUrl="Web.config" publishTime="01/25/2012 01:15:40" />
+    <file relUrl="bin/TestSite2.dll" publishTime="01/25/2012 02:10:42" />
+    <file relUrl="Default.aspx" publishTime="01/25/2012 02:07:14" />
+    <file relUrl="bin/TestSite2.pdb" publishTime="01/25/2012 02:10:42" />
+    <file relUrl="Scripts/jquery-1.4.1.js" publishTime="01/25/2012 00:30:33" />
+  </publishProfile>
+</publishData>

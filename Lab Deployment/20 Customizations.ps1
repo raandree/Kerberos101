@@ -134,6 +134,6 @@ if (Test-LabMachineInternetConnectivity -ComputerName $devMachine) {
     }
 }
 
-Uninstall-LabWindowsFeature -Name Windows-Defender-Features -ComputerName $devMachine
+Uninstall-LabWindowsFeature -FeatureName Windows-Defender-Features -ComputerName $devMachine
 
 Checkpoint-LabVM -All -SnapshotName AfterCustomizations

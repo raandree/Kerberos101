@@ -33,6 +33,8 @@ All deployment scripts are in the folder [Lab Deployment](/Lab%20Deployment/). P
 
     This script deploys the machines with the given roles.
 
+    > :information_source: The only reference to an ISO file in this script is in line 22. If your SQL ISO file is named differently, please change the path in the script.
+
 - ### [20 Customizations.ps1](./20%20Customizations.ps1)
 
     All other customizations like software installation of web site configuration is taken care of by this script.

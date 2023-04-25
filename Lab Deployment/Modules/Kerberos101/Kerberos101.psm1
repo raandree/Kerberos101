@@ -1,3 +1,10 @@
+$computers = @{
+	FileServer = "KerbFile2.a.vm.net"
+	SqlServer = "KerbSql22.a.vm.net"
+	DC1 = "KerbDC2.a.vm.net"
+	Client = "KerbClient2.a.vm.net"
+}
+
 #region Internals
 function Get-ADComputerSPNs
 {
@@ -10,69 +17,27 @@ function Get-ADComputerSPNs
 }
 #endregion
 
-$computers = @{
-	FileServer = "KerbFile1.a.vm.net";
-	SqlServer = "KerbSql1.a.vm.net";
-	DC1 = "KerbDC2.a.vm.net";
-	Client = "KerbClient2.a.vm.net";
-}
-
-#region Lab2
-function Start-Lab4
+#region Get SMB functions
+function Get-SmbData1
 {
-	<#
-	.SYNOPSIS
-		Does the changes required for lab 4
+	$path = "\\$((Test-Connection -ComputerName $computers.FileServer -Count 1).IPV4Address.IPAddressToString)\c$"
 
-	.DESCRIPTION
-		Removes the host SPN from the file server and adds them to the SQL server
+    $result = dir -Path $path
 
-	.INPUTS
-		System.String
-
-	.OUTPUTS
-		Null
-	#>
-
-	$computer = Get-ADComputer -LDAPFilter "(dNSHostName=$($computers.FileServer))" -Properties ServicePrincipalName
-	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Remove = "HOST/$($Computers.FileServer)" }
-	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Remove = "HOST/$($computers.FileServer.Substring(0, $computers.FileServer.IndexOf('.')))" }
-
-	$computer = Get-ADComputer -LDAPFilter "(dNSHostName=$($computers.SqlServer))" -Properties ServicePrincipalName
-	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Add = "HOST/$($Computers.FileServer)" }
-	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Add = "HOST/$($computers.FileServer.Substring(0, $computers.FileServer.IndexOf('.')))" }
-
-    Write-Host "Machine account $($computers.FileServer) prepared for lab 4"
+	Write-Host ("Read {0} files from file server's C:\ drive" -f $result.Count)
 }
 
-function Repair-Lab4
+function Get-SmbData2
 {
-	<#
-	.SYNOPSIS
-		Repairs the changes made for lab 4
+	$path = "\\$($computers.FileServer)\c$"
 
-	.DESCRIPTION
-		Removes the file server's SPNs from the SQL server account and adds them to the file server computer account.
+    $result = dir -Path $path
 
-	.INPUTS
-		System.String
-
-	.OUTPUTS
-		Null
-	#>
-
-    $computer = Get-ADComputer -LDAPFilter "(dNSHostName=$($computers.SqlServer))" -Properties ServicePrincipalName
-	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Remove = "HOST/$($Computers.FileServer)" }
-	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Remove = "HOST/$($computers.FileServer.Substring(0, $computers.FileServer.IndexOf('.')))" }
-
-    $computer = Get-ADComputer -LDAPFilter "(dNSHostName=$($computers.FileServer))" -Properties ServicePrincipalName
-	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Add = "HOST/$($Computers.FileServer)" }
-	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Add = "HOST/$($computers.FileServer.Substring(0, $computers.FileServer.IndexOf('.')))" }
-
-    Write-Host "Undone changes mode to machine account $($computers.FileServer) for lab 4"
+	Write-Host ("Read {0} files from file server's C:\ drive" -f $result.Count)
 }
-#endregion
+#endregion Get SMB functions
 
+#region Get SQL functions
 function Get-SqlData1
 {
 	$connection = New-Object System.Data.SqlClient.SqlConnection("Data Source=$((Test-Connection -ComputerName $computers.SqlServer -Count 1).IPV4Address.IPAddressToString);Initial Catalog=pubs;Integrated Security=SSPI;")
@@ -112,16 +77,17 @@ function Get-SqlData2
 
 	Write-Host ("Read {0} records from the pubs database" -f $numberOfRecords)
 }
+#endregion Get SMB functions
 
-#region Lab1
-function Start-Lab3
+#region Lab5
+function Start-Lab5
 {
 	<#
 	.SYNOPSIS
-		Does the changes required for lab 3
+		Does the changes required for lab 5
 
 	.DESCRIPTION
-		Adds the file server's SPNs on the client computer account for the client machine.
+		Removes the host SPN from the file server and adds them to the SQL server
 
 	.INPUTS
 		System.String
@@ -134,14 +100,70 @@ function Start-Lab3
 	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Remove = "HOST/$($Computers.FileServer)" }
 	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Remove = "HOST/$($computers.FileServer.Substring(0, $computers.FileServer.IndexOf('.')))" }
 
-    Write-Host "Machine account $($computers.FileServer) prepared for lab 3"
+	$computer = Get-ADComputer -LDAPFilter "(dNSHostName=$($computers.SqlServer))" -Properties ServicePrincipalName
+	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Add = "HOST/$($Computers.FileServer)" }
+	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Add = "HOST/$($computers.FileServer.Substring(0, $computers.FileServer.IndexOf('.')))" }
+
+    Write-Host "Machine account $($computers.FileServer) prepared for lab 5"
 }
 
-function Repair-Lab3
+function Repair-Lab5
 {
 	<#
 	.SYNOPSIS
-		Repairs the changes made for lab 3
+		Repairs the changes made for lab 5
+
+	.DESCRIPTION
+		Removes the file server's SPNs from the SQL server account and adds them to the file server computer account.
+
+	.INPUTS
+		System.String
+
+	.OUTPUTS
+		Null
+	#>
+
+    $computer = Get-ADComputer -LDAPFilter "(dNSHostName=$($computers.SqlServer))" -Properties ServicePrincipalName
+	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Remove = "HOST/$($Computers.FileServer)" }
+	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Remove = "HOST/$($computers.FileServer.Substring(0, $computers.FileServer.IndexOf('.')))" }
+
+    $computer = Get-ADComputer -LDAPFilter "(dNSHostName=$($computers.FileServer))" -Properties ServicePrincipalName
+	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Add = "HOST/$($Computers.FileServer)" }
+	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Add = "HOST/$($computers.FileServer.Substring(0, $computers.FileServer.IndexOf('.')))" }
+
+    Write-Host "Undone changes made to machine account $($computers.FileServer) for lab 5"
+}
+#endregion lab 5
+
+#region lab 4
+function Start-Lab4
+{
+	<#
+	.SYNOPSIS
+		Does the changes required for lab 4
+
+	.DESCRIPTION
+		Removes the file server's SPNs from the file server's computer account.
+
+	.INPUTS
+		System.String
+
+	.OUTPUTS
+		Null
+	#>
+
+	$computer = Get-ADComputer -LDAPFilter "(dNSHostName=$($computers.FileServer))" -Properties ServicePrincipalName
+	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Remove = "HOST/$($Computers.FileServer)" }
+	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Remove = "HOST/$($computers.FileServer.Substring(0, $computers.FileServer.IndexOf('.')))" }
+
+    Write-Host "Machine account $($computers.FileServer) prepared for lab 4"
+}
+
+function Repair-Lab4
+{
+	<#
+	.SYNOPSIS
+		Repairs the changes made for lab 4
 
 	.DESCRIPTION
 		Removes the file server's SPNs from the computer account for the client machine.
@@ -157,6 +179,6 @@ function Repair-Lab3
 	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Add = "HOST/$($Computers.FileServer)" }
 	Set-ADComputer -Identity $computer -ServicePrincipalNames @{ Add = "HOST/$($computers.FileServer.Substring(0, $computers.FileServer.IndexOf('.')))" }
 
-    Write-Host "Undone changes mode to machine account $($computers.FileServer) for lab 3"
+    Write-Host "Undone changes made to machine account $($computers.FileServer) for lab 4"
 }
 #endregion

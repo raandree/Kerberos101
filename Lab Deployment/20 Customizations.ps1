@@ -55,6 +55,11 @@ $softwarePackages = @{
         CommandLine = '/S'
         Machines    = 'All'
     }
+    '7zip'                    = @{
+        Url         = 'https://7-zip.org/a/7z2201-x64.exe'
+        CommandLine = '/S'
+        Machines    = 'All'
+    }
     VsCodePowerShellExtension = @{
         Url               = 'https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode/vsextensions/PowerShell/2023.4.0/vspackage'
         DestinationFolder = 'VSCodeExtensions'
@@ -125,6 +130,7 @@ Copy-LabFileItem -Path "$PSScriptRoot\Modules\NTFSSecurity" -ComputerName $allMa
 Copy-LabFileItem -Path $PSScriptRoot\Modules\Kerberos101 -ComputerName $allMachines -DestinationFolderPath 'C:\Program Files\WindowsPowerShell\Modules'
 Copy-LabFileItem -Path $PSScriptRoot\SqlScripts -ComputerName $sqlServers
 Copy-LabFileItem -Path "$PSScriptRoot\Setup Web Sites" -ComputerName $webServer -DestinationFolderPath C:\Kerberos101
+Copy-LabFileItem -Path "$PSScriptRoot\data.7z" -ComputerName $devMachine
 
 Invoke-LabCommand -ActivityName 'Setup Websites' -ComputerName $webServer -ScriptBlock {
 

@@ -1,4 +1,5 @@
-if ((Get-Lab -ErrorAction SilentlyContinue).Name -ne 'Kerberos101') {
+if ((Get-Lab -ErrorAction SilentlyContinue).Name -ne 'Kerberos101')
+{
     Import-Lab -Name Kerberos101 -NoValidation -ErrorAction Stop
 }
 
@@ -10,7 +11,7 @@ $allMachines = Get-LabVM
 
 $softwarePackages = @{
     VsCode                    = @{
-        Url         = 'https://go.microsoft.com/fwlink/?Linkid=852157'
+        Url         = 'https://az764295.vo.msecnd.net/stable/704ed70d4fd1c6bd6342c436f1ede30d1cff4710/VSCodeSetup-x64-1.77.3.exe'
         CommandLine = '/VERYSILENT /MERGETASKS=!runcode'
         Machines    = $devMachine
     }
@@ -55,27 +56,33 @@ $softwarePackages = @{
         Machines    = 'All'
     }
     VsCodePowerShellExtension = @{
-        Url               = 'https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode/vsextensions/PowerShell/2023.3.3/vspackage'
+        Url               = 'https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode/vsextensions/PowerShell/2023.4.0/vspackage'
         DestinationFolder = 'VSCodeExtensions'
     }
 }
 
-foreach ($softwarePackage in $softwarePackages.GetEnumerator()) {
-    $destinationFolder = if ($softwarePackage.Value.DestinationFolder) {
+foreach ($softwarePackage in $softwarePackages.GetEnumerator())
+{
+    $destinationFolder = if ($softwarePackage.Value.DestinationFolder)
+    {
         "$labSources\$($softwarePackage.Value.DestinationFolder)"
     }
-    else {
+    else
+    {
         "$labSources\SoftwarePackages"
     }
     Write-Host "Downloading '$($softwarePackage.Name)' ($($softwarePackage.Value.Url)) to '$destinationFolder'" -NoNewline
     $softwarePackage.Value.Installer = Get-LabInternetFile -Uri $softwarePackage.Value.Url -Path $labSources\SoftwarePackages -PassThru
     Write-Host done.
 
-    if ($softwarePackage.Value.Machines) {
-        $machines = if ($softwarePackage.Value.Machines -eq 'All') {
+    if ($softwarePackage.Value.Machines)
+    {
+        $machines = if ($softwarePackage.Value.Machines -eq 'All')
+        {
             Get-LabVM
         }
-        else {
+        else
+        {
             Get-LabVM -ComputerName $softwarePackage.Value.Machines
         }
         Write-Host "Installing '$($softwarePackage.Name)' to machines '$($machines)'" -NoNewline
@@ -139,11 +146,12 @@ Invoke-LabCommand -ActivityName "Add user 'a877777' to local admins" -ScriptBloc
 
 Add-VMNetworkAdapter -VMName $devMachine -Name Internet -SwitchName 'Default Switch'
 
-if (Test-LabMachineInternetConnectivity -ComputerName $devMachine) {
+if (Test-LabMachineInternetConnectivity -ComputerName $devMachine)
+{
     Invoke-LabCommand -ActivityName 'Installing Bruce' -ComputerName $devMachine -ScriptBlock {
-    
+
         dotnet tool install -g bruce
-    
+
     }
 }
 

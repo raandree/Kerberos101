@@ -1,5 +1,5 @@
 $labName = 'Kerberos101'
-$sqlIsoPath = "$labSources\ISOs\SQLServer2019-x64-ENU.iso"
+$sqlIsoImageName = 'SQLServer2019-x64-ENU.iso' #this file should be stored in '$labSources\ISOs'
 
 #--------------------------------------------------------------------------------------------------------------------
 #----------------------- CHANGING ANYTHING BEYOND THIS LINE SHOULD NOT BE REQUIRED ----------------------------------
@@ -19,6 +19,7 @@ Add-LabDomainDefinition -Name a.vm.net -AdminUser Install -AdminPassword Somepas
 Add-LabDomainDefinition -Name test.net -AdminUser Install -AdminPassword Somepass0
 
 #these images are used to Install the machines
+$sqlIsoPath = "$labSources\ISOs\$sqlIsoImageName"
 Add-LabIsoImageDefinition -Name SQLServer2019 -Path $sqlIsoPath
 
 #defining default parameter values, as these ones are the same for all the machines

@@ -131,6 +131,7 @@ Copy-LabFileItem -Path $PSScriptRoot\Modules\Kerberos101 -ComputerName $allMachi
 Copy-LabFileItem -Path $PSScriptRoot\SqlScripts -ComputerName $sqlServers
 Copy-LabFileItem -Path "$PSScriptRoot\Setup Web Sites" -ComputerName $webServer -DestinationFolderPath C:\Kerberos101
 Copy-LabFileItem -Path "$PSScriptRoot\data.7z" -ComputerName $devMachine
+Copy-LabFileItem -Path $labSources\SoftwarePackages\SQL2019\SSMS-Setup-ENU.exe -ComputerName $devMachine
 
 Invoke-LabCommand -ActivityName 'Setup Websites' -ComputerName $webServer -ScriptBlock {
 
@@ -162,5 +163,16 @@ if (Test-LabMachineInternetConnectivity -ComputerName $devMachine)
 }
 
 Uninstall-LabWindowsFeature -FeatureName Windows-Defender-Features -ComputerName $devMachine
+Restart-LabVM -ComputerName $devMachine -Wait
+
+Invoke-LabCommand -ActivityName "Extract 'data.7z file'" -ComputerName $devMachine -ScriptBlock {
+
+    $7z = (dir -Path ([System.Environment]::GetFolderPath('ProgramFiles')) -Filter 7z.exe -Recurse).FullName
+    & $7z x C:\data.7z -oC:\Data -px
+
+    & $7z x C:\Data\mimikatz_trunk.zip -oC:\mimikatz
+}
+
+Stop-LabVM -All -Wait
 
 Checkpoint-LabVM -All -SnapshotName AfterCustomizations

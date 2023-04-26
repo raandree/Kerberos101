@@ -89,9 +89,11 @@ Remove-LabPSSession
 
 Copy-LabFileItem -Path $labSources\SoftwarePackages\VSCodeExtensions -ComputerName $devMachine
 Invoke-LabCommand -ActivityName 'Install VSCode Extensions' -ComputerName $devMachine -ScriptBlock {
+
     dir -Path C:\VSCodeExtensions | ForEach-Object {
         code --install-extension $_.FullName 2>$null #suppressing errors
     }
+
 } -NoDisplay
 
 #Create SMB share and test file on the file server
@@ -106,6 +108,7 @@ Invoke-LabCommand -ActivityName 'Create SMB Share' -ComputerName $fileServer -Sc
 Invoke-LabCommand -ActivityName 'Enabling RDP Restricted Mode' -ComputerName $allMachines -ScriptBlock {
 
     Set-ItemProperty -Path HKLM:\System\CurrentControlSet\Control\Lsa -Name DisableRestrictedAdmin -Value 0 -Type DWord
+
 }
 
 Save-Module -Name DSInternals -Path $PSScriptRoot\Modules
@@ -117,7 +120,9 @@ Copy-LabFileItem -Path $PSScriptRoot\SqlScripts -ComputerName $sqlServers
 Copy-LabFileItem -Path "$PSScriptRoot\Setup Web Sites" -ComputerName $webServer -DestinationFolderPath C:\Kerberos101
 
 Invoke-LabCommand -ActivityName 'Setup Websites' -ComputerName $webServer -ScriptBlock {
+
     . 'C:\Kerberos101\Setup Web Sites\Add-KerbWebApplications.ps1'
+
 }
 
 Invoke-LabCommand -ActivityName 'Setup SQL Databases and Permissions' -ComputerName $sqlServers -ScriptBlock {
@@ -126,11 +131,19 @@ Invoke-LabCommand -ActivityName 'Setup SQL Databases and Permissions' -ComputerN
     SQLCMD.EXE -i C:\SqlScripts\dbpermissions.sql
 }
 
+Invoke-LabCommand -ActivityName "Add user 'a877777' to local admins" -ScriptBlock {
+
+    Add-LocalGroupMember -Group Administrators -Member a877777
+
+} -ComputerName $devMachine
+
 Add-VMNetworkAdapter -VMName $devMachine -Name Internet -SwitchName 'Default Switch'
 
 if (Test-LabMachineInternetConnectivity -ComputerName $devMachine) {
     Invoke-LabCommand -ActivityName 'Installing Bruce' -ComputerName $devMachine -ScriptBlock {
+    
         dotnet tool install -g bruce
+    
     }
 }
 

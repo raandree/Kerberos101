@@ -10,3 +10,5 @@
 ## 1.5. [Troubleshooting SPNs Part 2](./TroubleshootingSpnsPart2.md)
 
 ## 1.6. [Create a keytab and inspect it](./CreateKeytabAndInspectIt.md)
+
+## [Unconstrained Delegation](./UnconstrainedDelegation.md)

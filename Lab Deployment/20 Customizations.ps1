@@ -1,4 +1,5 @@
-if ((Get-Lab -ErrorAction SilentlyContinue).Name -ne 'Kerberos101') {
+if ((Get-Lab -ErrorAction SilentlyContinue).Name -ne 'Kerberos101')
+{
     Import-Lab -Name Kerberos101 -NoValidation -ErrorAction Stop
 }
 
@@ -10,7 +11,7 @@ $allMachines = Get-LabVM
 
 $softwarePackages = @{
     VsCode                    = @{
-        Url         = 'https://go.microsoft.com/fwlink/?Linkid=852157'
+        Url         = 'https://az764295.vo.msecnd.net/stable/704ed70d4fd1c6bd6342c436f1ede30d1cff4710/VSCodeSetup-x64-1.77.3.exe'
         CommandLine = '/VERYSILENT /MERGETASKS=!runcode'
         Machines    = $devMachine
     }
@@ -54,28 +55,39 @@ $softwarePackages = @{
         CommandLine = '/S'
         Machines    = 'All'
     }
+    '7zip'                    = @{
+        Url         = 'https://7-zip.org/a/7z2201-x64.exe'
+        CommandLine = '/S'
+        Machines    = 'All'
+    }
     VsCodePowerShellExtension = @{
-        Url               = 'https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode/vsextensions/PowerShell/2023.3.3/vspackage'
+        Url               = 'https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode/vsextensions/PowerShell/2023.4.0/vspackage'
         DestinationFolder = 'VSCodeExtensions'
     }
 }
 
-foreach ($softwarePackage in $softwarePackages.GetEnumerator()) {
-    $destinationFolder = if ($softwarePackage.Value.DestinationFolder) {
+foreach ($softwarePackage in $softwarePackages.GetEnumerator())
+{
+    $destinationFolder = if ($softwarePackage.Value.DestinationFolder)
+    {
         "$labSources\$($softwarePackage.Value.DestinationFolder)"
     }
-    else {
+    else
+    {
         "$labSources\SoftwarePackages"
     }
     Write-Host "Downloading '$($softwarePackage.Name)' ($($softwarePackage.Value.Url)) to '$destinationFolder'" -NoNewline
     $softwarePackage.Value.Installer = Get-LabInternetFile -Uri $softwarePackage.Value.Url -Path $labSources\SoftwarePackages -PassThru
     Write-Host done.
 
-    if ($softwarePackage.Value.Machines) {
-        $machines = if ($softwarePackage.Value.Machines -eq 'All') {
+    if ($softwarePackage.Value.Machines)
+    {
+        $machines = if ($softwarePackage.Value.Machines -eq 'All')
+        {
             Get-LabVM
         }
-        else {
+        else
+        {
             Get-LabVM -ComputerName $softwarePackage.Value.Machines
         }
         Write-Host "Installing '$($softwarePackage.Name)' to machines '$($machines)'" -NoNewline
@@ -89,9 +101,11 @@ Remove-LabPSSession
 
 Copy-LabFileItem -Path $labSources\SoftwarePackages\VSCodeExtensions -ComputerName $devMachine
 Invoke-LabCommand -ActivityName 'Install VSCode Extensions' -ComputerName $devMachine -ScriptBlock {
+
     dir -Path C:\VSCodeExtensions | ForEach-Object {
         code --install-extension $_.FullName 2>$null #suppressing errors
     }
+
 } -NoDisplay
 
 #Create SMB share and test file on the file server
@@ -106,6 +120,7 @@ Invoke-LabCommand -ActivityName 'Create SMB Share' -ComputerName $fileServer -Sc
 Invoke-LabCommand -ActivityName 'Enabling RDP Restricted Mode' -ComputerName $allMachines -ScriptBlock {
 
     Set-ItemProperty -Path HKLM:\System\CurrentControlSet\Control\Lsa -Name DisableRestrictedAdmin -Value 0 -Type DWord
+
 }
 
 Save-Module -Name DSInternals -Path $PSScriptRoot\Modules
@@ -115,9 +130,13 @@ Copy-LabFileItem -Path "$PSScriptRoot\Modules\NTFSSecurity" -ComputerName $allMa
 Copy-LabFileItem -Path $PSScriptRoot\Modules\Kerberos101 -ComputerName $allMachines -DestinationFolderPath 'C:\Program Files\WindowsPowerShell\Modules'
 Copy-LabFileItem -Path $PSScriptRoot\SqlScripts -ComputerName $sqlServers
 Copy-LabFileItem -Path "$PSScriptRoot\Setup Web Sites" -ComputerName $webServer -DestinationFolderPath C:\Kerberos101
+Copy-LabFileItem -Path "$PSScriptRoot\data.7z" -ComputerName $devMachine
+Copy-LabFileItem -Path $labSources\SoftwarePackages\SQL2019\SSMS-Setup-ENU.exe -ComputerName $devMachine
 
 Invoke-LabCommand -ActivityName 'Setup Websites' -ComputerName $webServer -ScriptBlock {
+
     . 'C:\Kerberos101\Setup Web Sites\Add-KerbWebApplications.ps1'
+
 }
 
 Invoke-LabCommand -ActivityName 'Setup SQL Databases and Permissions' -ComputerName $sqlServers -ScriptBlock {
@@ -126,14 +145,34 @@ Invoke-LabCommand -ActivityName 'Setup SQL Databases and Permissions' -ComputerN
     SQLCMD.EXE -i C:\SqlScripts\dbpermissions.sql
 }
 
+Invoke-LabCommand -ActivityName "Add user 'a877777' to local admins" -ScriptBlock {
+
+    Add-LocalGroupMember -Group Administrators -Member a877777
+
+} -ComputerName $devMachine
+
 Add-VMNetworkAdapter -VMName $devMachine -Name Internet -SwitchName 'Default Switch'
 
-if (Test-LabMachineInternetConnectivity -ComputerName $devMachine) {
+if (Test-LabMachineInternetConnectivity -ComputerName $devMachine)
+{
     Invoke-LabCommand -ActivityName 'Installing Bruce' -ComputerName $devMachine -ScriptBlock {
+
         dotnet tool install -g bruce
+
     }
 }
 
 Uninstall-LabWindowsFeature -FeatureName Windows-Defender-Features -ComputerName $devMachine
+Restart-LabVM -ComputerName $devMachine -Wait
+
+Invoke-LabCommand -ActivityName "Extract 'data.7z file'" -ComputerName $devMachine -ScriptBlock {
+
+    $7z = (dir -Path ([System.Environment]::GetFolderPath('ProgramFiles')) -Filter 7z.exe -Recurse).FullName
+    & $7z x C:\data.7z -oC:\Data -px
+
+    & $7z x C:\Data\mimikatz_trunk.zip -oC:\mimikatz
+}
+
+Stop-LabVM -All -Wait
 
 Checkpoint-LabVM -All -SnapshotName AfterCustomizations

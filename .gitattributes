@@ -13,3 +13,4 @@
 *.vsix binary
 *.pptx binary
 *.pdf  binary
+*.7z   binary

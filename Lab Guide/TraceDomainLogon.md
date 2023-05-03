@@ -12,7 +12,7 @@ This will cause some network traffic that the network sniffer running on the dom
 
 As there is a lot of communication that is not interesting we can filter the traffic for Kerberos traffic.
 
-:ballot_box_with_check: Type `Kerberos` into the filter textbox and press enter. If the box is not green something is wrong with the filter.
+:ballot_box_with_check: Type `Kerberos` into the filter textbox and press enter. If the filter text box is not green something is wrong with the filter.
 
 Now everything is setup and we can logon to the client machine.
 

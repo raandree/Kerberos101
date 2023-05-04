@@ -14,7 +14,7 @@ In the Linux world or non-Microsoft Kerberos world, Keytab files very similar to
 $ou = New-ADOrganizationalUnit -Name KeyTabTests -PassThru
 New-ADUser -Name User1 -Path $ou
 
-ktpass /out c:\krb5.keytab /princ User1$@a.vm.net /mapuser User1 /crypto RC4-HMAC-NT /ptype KRB5_NT_PRINCIPAL /pass Somepass2 /target KerbDC2.a.vm.net
+ktpass /out c:\krb5.keytab /princ http/SomeWebServer.a.vm.net$@a.vm.net /mapuser User1 /crypto RC4-HMAC-NT /ptype KRB5_NT_PRINCIPAL /pass Somepass2 /target KerbDC2.a.vm.net
 ```
 
 Even if we cannot use the Keytab file, it is quite interesting to look at it. We can read the Keytab file with `ktpass.exe`.

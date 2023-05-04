@@ -6,6 +6,8 @@ In this lab you will create a Keytab file. We are not be able to use it for some
 
 In the Linux world or non-Microsoft Kerberos world, Keytab files very similar to the Windows trust relationship. When creating a keytab file, the password hash is stored in the on the given account in the KDC's database as well as the Keytab file.
 
+:ballot_box_with_check: Logon to the machine `KerbClient2`.
+
 :ballot_box_with_check: Create a new account in Active Directory and a Keytab file that that account.
 
 ```powershell

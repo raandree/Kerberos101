@@ -8,6 +8,8 @@ In this lab, we take a first look at Kerberos network traffic. All relevant info
 
 :ballot_box_with_check: Start the Wireshark and start also a new network trace.
 
+> :warning: Make sure you are starting the trace on the network adapter `Kerberos 101` and not the loopback adapter.
+
 This will cause some network traffic that the network sniffer running on the domain controller will capture.
 
 As there is a lot of communication that is not interesting we can filter the traffic for Kerberos traffic.

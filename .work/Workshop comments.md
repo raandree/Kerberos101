@@ -14,3 +14,5 @@ https://social.technet.microsoft.com/wiki/contents/articles/383.gathering-a-netw
 Enforce Pac validation
 
 https://learn.microsoft.com/en-us/troubleshoot/windows-server/identity/optimize-dc-location-global-catalog
+
+https://learn.microsoft.com/en-us/power-bi/connect-data/service-gateway-sso-kerberos

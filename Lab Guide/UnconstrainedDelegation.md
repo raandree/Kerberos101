@@ -32,7 +32,7 @@ dir \\kerbfile2\c$
 
 You will not be able to access the remote shares and will be seeing the error `Access is denied`.
 
-:ballot_box_with_check: Take a look at the `cifs` ticket for the target account `KerbFile2` and make a note of the ticket flags.
+:ballot_box_with_check: Take a look at the `http` ticket for the target account `KerbFile2` and make a note of the ticket flags.
 
 :question: Why is the server we have connected to not be able to authenticate us against a third machine?
 :question: What does a user require to authenticate us to another remote system from a remote system?
@@ -50,7 +50,7 @@ Now it is time to test accessing the remote shares from the remote machine again
 :ballot_box_with_check: Try to access access a remote share again. This time it should work.
 :ballot_box_with_check: Take a look at your tickets using `klist` on the `KerbCliet2` and compare the ticket options.
 
-:question: What is the difference between the `cifs` tickets in a delegation and non-delegation scenario?
+:question: What is the difference between the `http` ticket in a delegation and non-delegation scenario?
 :question: Which ticket has been forwarded to the remote machine (`KerbWeb2`) so we can do another authentication, the so called "double hop"?
 :question: Is there another way of allowing a second hop from a remote machine?
 :question: What are the downsides when enabling Kerberos delegation on a machine?
